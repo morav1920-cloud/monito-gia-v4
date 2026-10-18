@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Paleta Monito gIA — papel crema + tinta púrpura + acentos salvia/coral */
+    --background: 33 55% 93%;          /* #F7EDE2 papel crema */
+    --foreground: 265 37% 24%;         /* #3F2B5C tinta púrpura */
+    --card: 36 60% 97%;                /* #FDF8F1 crema claro */
+    --card-foreground: 265 37% 24%;
+    --popover: 36 60% 97%;
+    --popover-foreground: 265 37% 24%;
+    --primary: 266 31% 36%;            /* #563E79 púrpura profundo */
+    --primary-foreground: 33 55% 95%;
+    --secondary: 6 67% 86%;            /* #F5CAC3 coral */
+    --secondary-foreground: 265 37% 24%;
+    --muted: 32 40% 88%;
+    --muted-foreground: 272 16% 47%;   /* #7A6899 */
+    --accent: 170 17% 58%;             /* #84A59D salvia */
+    --accent-foreground: 172 45% 12%;
+    --destructive: 0 79% 63%;
+    --destructive-foreground: 33 55% 95%;
+    --border: 30 32% 82%;
+    --input: 30 32% 78%;
+    --ring: 266 31% 36%;
+    --radius: 1rem;
+    --sidebar-background: 36 60% 96%;
+    --sidebar-foreground: 265 37% 24%;
+    --sidebar-primary: 266 31% 36%;
+    --sidebar-primary-foreground: 33 55% 95%;
+    --sidebar-accent: 6 67% 90%;
+    --sidebar-accent-foreground: 265 37% 24%;
+    --sidebar-border: 30 32% 85%;
+    --sidebar-ring: 266 31% 36%;
+  }
+
+  .dark {
+    --background: 265 30% 14%;
+    --foreground: 33 45% 92%;
+    --card: 264 28% 18%;
+    --card-foreground: 33 45% 92%;
+    --popover: 264 28% 18%;
+    --popover-foreground: 33 45% 92%;
+    --primary: 36 100% 78%;
+    --primary-foreground: 265 37% 20%;
+    --secondary: 266 20% 26%;
+    --secondary-foreground: 33 45% 92%;
+    --muted: 266 18% 26%;
+    --muted-foreground: 280 12% 70%;
+    --accent: 170 20% 45%;
+    --accent-foreground: 33 45% 95%;
+    --destructive: 0 60% 50%;
+    --destructive-foreground: 33 45% 95%;
+    --border: 266 18% 28%;
+    --input: 266 18% 30%;
+    --ring: 36 100% 78%;
+    --sidebar-background: 265 30% 17%;
+    --sidebar-foreground: 33 45% 92%;
+    --sidebar-primary: 36 100% 78%;
+    --sidebar-primary-foreground: 265 37% 20%;
+    --sidebar-accent: 266 20% 26%;
+    --sidebar-accent-foreground: 33 45% 92%;
+    --sidebar-border: 266 18% 28%;
+    --sidebar-ring: 36 100% 78%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    /* Textura de papel: ruido SVG sutil sobre el crema */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='128' height='128' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  }
+}
+
+@layer components {
+  .font-display {
+    font-family: 'Dela Gothic One', 'Manrope', ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: -0.01em;
+  }
+  /* Tarjeta papel: sombra suave + borde cálido */
+  .paper-card {
+    @apply bg-card rounded-3xl border border-border;
+    box-shadow: 0 14px 34px -18px rgba(63, 43, 92, 0.28);
+  }
+  /* Botón/superficie táctil con relieve inferior (lenguaje infantil) */
+  .tactile {
+    box-shadow: 0 4px 0 0 rgba(63, 43, 92, 0.18);
+    transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+  }
+  .tactile:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 0 rgba(63, 43, 92, 0.18);
+  }
+  .tactile:active:not(:disabled) {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 0 rgba(63, 43, 92, 0.18);
+  }
+  /* Insignia tipo sticker con rotación */
+  .sticker {
+    @apply inline-flex items-center gap-2 rounded-2xl border-2 px-3 py-1.5 font-bold;
+    box-shadow: 0 6px 14px -8px rgba(63, 43, 92, 0.45);
+  }
+}
+
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+  50% { transform: translateY(-10px) rotate(var(--rot, 0deg)); }
+}
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.95) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes step-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+.animate-float-soft { animation: float-soft 5s ease-in-out infinite; }
+.animate-pop-in { animation: pop-in 0.25s ease-out both; }
+.animate-step-pulse { animation: step-pulse 1.2s ease-in-out infinite; }
+
+/* ---- Monito gIA: guía holográfico (Brand Book §1) ---- */
+@keyframes monito-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+@keyframes monito-core-pulse {
+  0%, 100% { opacity: 0.75; }
+  50% { opacity: 1; }
+}
+@keyframes monito-wave-arm {
+  0%, 100% { transform: rotate(-150deg); }
+  50% { transform: rotate(-166deg); }
+}
+.monito-float { animation: monito-float 3.4s ease-in-out infinite; }
+.monito-core { animation: monito-core-pulse 2.6s ease-in-out infinite; }
+.monito-wave { animation: monito-wave-arm 1.7s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-soft, .animate-pop-in, .animate-step-pulse,
+  .monito-float, .monito-core, .monito-wave {
+    animation: none;
+  }
+}
